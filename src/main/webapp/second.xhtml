@@ -27,14 +27,14 @@
                         <table>
                             <tr>
                                 <td><h:outputLabel value="Координата X" for="firstNumber" /></td>
-                                <td><h:inputText id="firstNumber" value="#{glavniy.x}" required="true" pt:oninput="change_input_field(this, 0)">
+                                <td><h:inputText id="firstNumber" value="#{glavniy.x}" required="true" pt:oninput="change_input_field_2(this, 0)">
                                     <f:validateDoubleRange minimum="-5" maximum="5" />
                                 </h:inputText></td>
                                 <td><h:message for="firstNumber" /></td>
                             </tr>
                             <tr>
                                 <td><h:outputLabel value="Координата Y" for="secondNumber" /></td>
-                                <td><h:inputText id="secondNumber" value="#{glavniy.y}" required="true" pt:oninput="change_input_field(this, 1)">
+                                <td><h:inputText id="secondNumber" value="#{glavniy.y}" required="true" pt:oninput="change_input_field_2(this, 1)">
                                     <f:validateDoubleRange minimum="-5" maximum="5" />
                                 </h:inputText></td>
                                 <td><h:message for="secondNumber" /></td>

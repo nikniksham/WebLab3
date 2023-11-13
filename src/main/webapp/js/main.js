@@ -290,6 +290,14 @@ function change_input_field(elem, ty) {
     }
 }
 
+function change_input_field_2(elem, ty) {
+    let elval = elem.value.replace(/[^(\.|\d|\-)]/g, '').slice(0, 15);
+    let coords = ty === 0 ? grid.trans_coords_to_canvas(elval, 0) : grid.trans_coords_to_canvas(0, elval);
+    grid.point_coords[ty] = coords[ty];
+    grid.point_coords[2] = 2;
+    grid.draw();
+}
+
 function check_num_ogr(min_value, max_value, num) {
     if (num > max_value) {
         num = max_value;
