@@ -245,6 +245,7 @@ canvas.onclick = function (evt) {
         // grid.point_coords = [res[0], res[1], inPrimitive(x_coords, y_coords, grid.r)];
         grid.point_coords = [res[0], res[1], 2];
         grid.draw();
+        document.getElementById("forma:check_hit").click();
     }
 }
 
