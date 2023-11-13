@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
 <head>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
@@ -23,29 +23,29 @@
                         поймут в чём же дело и как сложен js))) Действительно тонко))) Не так уж много и образованных в
                         наше время, кто знает, почему это так интересно и необычно)))
                     </p>
-                    <div class="custom">
-                        <label for="size_r">Параметр R:</label>
-                        <select name="size_r" id="size_r" class="my-select">
-                            <option value="1">1</option>
-                            <option value="1.5">1.5</option>
-                            <option value="2">2</option>
-                            <option value="2.5">2.5</option>
-                            <option value="3" selected="selected">3</option>
-                        </select>
-                    </div>
-
-                    <div class="custom">
-                        <label for="x_coords">X координата:</label>
-                        <input type="text" id="x_coords"/>
-                    </div>
-
-                    <div class="custom">
-                        <label for="y_coords">Y координата:</label>
-                        <input type="text" id="y_coords" name="y_coords" class="my-input"/>
-                    </div>
+                    <h:form id="forma">
+                        <table>
+                            <tr>
+                                <td><h:outputLabel value="Координата X" for="firstNumber" /></td>
+                                <td><h:inputText id="firstNumber" value="#{glavniy.x}" required="true" /></td>
+                                <td><h:message for="firstNumber" /></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel value="Координата Y" for="secondNumber" /></td>
+                                <td><h:inputText id="secondNumber" value="#{glavniy.y}" required="true" /></td>
+                                <td><h:message for="secondNumber" /></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel value="R" for="thirdNumber" /></td>
+                                <td><h:inputText id="thirdNumber" value="#{glavniy.r}" required="true" /></td>
+                                <td><h:message for="thirdNumber" /></td>
+                            </tr>
+                        </table>
+                        <h:commandButton action="#{glavniy.addNewData}" value="Проверить попадание" />
+                        <h:commandButton action="#{glavniy.updateData}" value="Обновить дату" />
+                    </h:form>
                     <button class="btn" onclick="request_to_servlet()">Есть пробитие?</button>
                     <button class="btn" onclick="clear_table()">Очистить табличку</button>
-                    <h5 id="form_error"></h5>
                 </div>
             </div>
             <div class="container">
@@ -57,12 +57,30 @@
                             <th colspan="1" style="width: 10%">Y</th>
                             <th colspan="1" style="width: 5%">R</th>
                             <th colspan="1" style="width: 15%">Результат</th>
-                            <th colspan="1" style="width: 35%">Выполнен в</th>
-                            <th colspan="1" style="width: 35%">Время выполнения</th>
+                            <th colspan="1" style="width: 30%">Выполнен в</th>
+                            <th colspan="1" style="width: 30%">Время выполнения</th>
                         </tr>
+                        <h:dataTable value="#{glavniy.data}" var="tab">
+                            <h:column pt:style="max-width: 10%" class='crop'>
+                                #{tab.x}
+                            </h:column>
+                            <h:column pt:style="max-width: 10%" class='crop'>
+                                #{tab.y}
+                            </h:column>
+                            <h:column pt:style="max-width: 5%" class='crop'>
+                                #{tab.r}
+                            </h:column>
+                            <h:column pt:style="max-width: 15%" class='crop'>
+                                #{tab.res}
+                            </h:column>
+                            <h:column pt:style="max-width: 30%" class='crop'>
+                                #{tab.ex_at}
+                            </h:column>
+                            <h:column pt:style="max-width: 30%" class='crop'>
+                                #{tab.ex_ti}
+                            </h:column>
+                        </h:dataTable>
                         </thead>
-                        <tbody id="suda">
-                        </tbody>
                     </table>
                 </div>
             </div>

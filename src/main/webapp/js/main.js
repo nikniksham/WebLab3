@@ -236,13 +236,12 @@ canvas.onclick = function (evt) {
         grid.need_cross = false;
         let res = grid.trans_canvas_to_coords(x, y);
         let x_coords = check_num_ogr(min_x, max_x, res[0]).toFixed(8), y_coords = check_num_ogr(min_y, max_y, res[1]).toFixed(8)
-        document.getElementById("x_coords").value = x_coords;
-        document.getElementById("y_coords").value = y_coords;
+        document.getElementById("forma:firstNumber").value = x_coords;
+        document.getElementById("forma:secondNumber").value = y_coords;
         res = grid.trans_coords_to_canvas(x_coords, y_coords);
         // grid.point_coords = [res[0], res[1], inPrimitive(x_coords, y_coords, grid.r)];
         grid.point_coords = [res[0], res[1], 2];
         grid.draw();
-        document.getElementById("form_error").innerHTML = "";
     }
 }
 

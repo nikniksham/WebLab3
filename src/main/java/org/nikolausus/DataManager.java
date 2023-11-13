@@ -30,9 +30,10 @@ public class DataManager extends HttpServlet{
 //
 //        upravBob.saveResOfHit(resOfHit);
 
-        for (Iterator<ResOfHitEntity> it = upravBob.getListResOfHitEntity().iterator(); it.hasNext();) {
-            ResOfHitEntity resOfHit = (ResOfHitEntity) it.next();
-            resp.getWriter().println(resOfHit.getX() + " " + resOfHit.getY() + " " + resOfHit.getR() + " " + resOfHit.isRes() + " " + resOfHit.getEx_at() + " " + resOfHit.getEx_ti());
-        }
+//        for (Iterator<ResOfHitEntity> it = upravBob.getListResOfHitEntity().iterator(); it.hasNext();) {
+//            ResOfHitEntity resOfHit = (ResOfHitEntity) it.next();
+//            resp.getWriter().println(resOfHit.getX() + " " + resOfHit.getY() + " " + resOfHit.getR() + " " + resOfHit.isRes() + " " + resOfHit.getEx_at() + " " + resOfHit.getEx_ti());
+//        }
+        req.getServletContext().setAttribute("data", upravBob.getListResOfHitEntity());
     }
 }

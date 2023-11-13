@@ -13,11 +13,11 @@ public class ResOfHitEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @Column(name = "x")
-    private int x;
+    private float x;
     @Column(name = "y")
-    private int y;
+    private float y;
     @Column(name = "r")
-    private int r;
+    private float r;
     @Column(name = "res")
     private boolean res;
     @Column(name = "ex_at")
@@ -33,27 +33,27 @@ public class ResOfHitEntity {
         this.id = id;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 
-    public int getR() {
+    public float getR() {
         return r;
     }
 
-    public void setR(int r) {
+    public void setR(float r) {
         this.r = r;
     }
 
