@@ -3,7 +3,7 @@ console.log(canvas);
 let ctx = canvas.getContext('2d');
 ctx.font = "24px roboto";
 ctx.lineWidth = "2";
-let min_x = -2.99999999, max_x = 4.99999999, min_y = -4.99999999, max_y = 2.99999999;
+let min_x = -5, max_x = 5, min_y = -5, max_y = 5;
 
 class Grid {
     constructor(size_x, size_y, r) {
@@ -13,7 +13,7 @@ class Grid {
         this.raz = this.size_x / 60;
         this.need_cross = true;
         this.point_coords = [-this.raz, -this.raz, 2];
-        this.scale = 7; // кол-во ступеней в сетке
+        this.scale = 11; // кол-во ступеней в сетке
         this.ssx = this.size_x / this.scale;
         this.ssy = this.size_y / this.scale;
         this.cursor_in_good_zone = false;
@@ -79,30 +79,25 @@ class Grid {
         x = c[0], y = c[1];
 
         // Четвертькруг
-        ctx.beginPath()
-        ctx.arc(x, y, this.size_x / this.scale / 2 * this.r, Math.PI, Math.PI / 2, true);
         ctx.fillStyle = "#15b3e8";
+        ctx.beginPath()
+        ctx.arc(x, y, this.size_x / this.scale / 2 * this.r, -Math.PI / 2, Math.PI, true);
         ctx.lineTo(x, y)
         ctx.fill();
 
         // Прямоугольник
         ctx.beginPath()
         ctx.moveTo(x, y);
-        c = this.trans_coords(0, -this.size_y / this.scale / 2 * this.r);
-        ctx.lineTo(c[0], c[1]);
-        c = this.trans_coords(-this.size_y / this.scale * this.r, -this.size_y / this.scale / 2 * this.r)
-        ctx.lineTo(c[0], c[1]);
-        c = this.trans_coords(-this.size_y / this.scale * this.r, 0)
-        ctx.lineTo(c[0], c[1]);
+        ctx.lineTo(...this.trans_coords(this.size_x / this.scale * this.r / 2, 0));
+        ctx.lineTo(...this.trans_coords(this.size_x / this.scale * this.r / 2, -this.size_y / this.scale * this.r));
+        ctx.lineTo(...this.trans_coords(0, -this.size_y / this.scale * this.r));
         ctx.fill();
 
         // Треугольник
         ctx.beginPath()
         ctx.moveTo(x, y);
-        c = this.trans_coords(this.size_x / this.scale * this.r, 0);
-        ctx.lineTo(c[0], c[1]);
-        c = this.trans_coords(0, this.size_y / this.scale / 2 * this.r);
-        ctx.lineTo(c[0], c[1]);
+        ctx.lineTo(...this.trans_coords(this.size_x / this.scale * this.r, 0));
+        ctx.lineTo(...this.trans_coords(0, this.size_y / this.scale * this.r));
         ctx.fill();
 
         ctx.fillStyle = "#000000";
@@ -139,9 +134,14 @@ class Grid {
             c = this.trans_coords(this.size_x / this.scale * i / 2, 0);
             x = c[0];
             y = c[1];
-            ctx.fillText(i / 2, x - String(i / 2).length * 5, y - this.raz - 5);
-            ctx.moveTo(x, y - this.raz);
-            ctx.lineTo(x, y + this.raz);
+            if (i % 2) {
+                ctx.moveTo(x, y - this.raz / 2);
+                ctx.lineTo(x, y + this.raz / 2);
+            } else {
+                ctx.fillText(i / 2, x - String(i / 2).length * 5, y - this.raz - 5);
+                ctx.moveTo(x, y - this.raz);
+                ctx.lineTo(x, y + this.raz);
+            }
         }
 
         // Вертикальная
@@ -152,21 +152,26 @@ class Grid {
             c = this.trans_coords(0, -this.size_y / this.scale * i / 2);
             x = c[0];
             y = c[1];
-            ctx.fillText(i / 2, x + this.raz + 5, y + 5);
-            ctx.moveTo(x - this.raz, y);
-            ctx.lineTo(x + this.raz, y);
+            if (i % 2) {
+                ctx.moveTo(x - this.raz / 2, y);
+                ctx.lineTo(x + this.raz / 2, y);
+            } else {
+                ctx.fillText(i / 2, x + this.raz + 5, y + 5);
+                ctx.moveTo(x - this.raz, y);
+                ctx.lineTo(x + this.raz, y);
+            }
         }
         ctx.stroke();
     }
 
     draw_all_points_from_cache() {
-        // document.getElementById("suda").innerHTML.split("<tr>").forEach(val => {
-        //     let res = val.replaceAll("</p></td>", "").split('<td><p class="crop">')
-        //     // console.log(res)
-        //     if (res.length > 1 && res[3] == this.r) {
-        //         this.draw_point(res[1], res[2], res[4] === "Hit" ? 1 : 0)
-        //     }
-        // })
+        document.getElementById("forma:r_table").value.split("|").forEach(val => {
+            let res = val.split(' ')
+            if (res.length > 1 && res[2] == this.r) {
+                this.draw_point(res[0], res[1], res[3] === "true" ? 1 : 0)
+            }
+        })
+
     }
 
     draw_point(x, y, s) {
@@ -211,8 +216,6 @@ class Grid {
     }
 }
 
-let grid = new Grid(canvas.width, canvas.height, 3); // r - размер фигурки
-
 function inPrimitive(x, y, r) {
     let res = 0;
     if ((x <= 0 && y <= 0 && (r / 2) ** 2 - x ** 2 - y ** 2 >= 0) || (x <= 0 && y >= 0 && x >= -r / 2 && y <= r) || (x >= 0 && y <= 0 && x <= r && y >= x / 2 - r / 2)) {
@@ -245,7 +248,7 @@ canvas.onclick = function (evt) {
     }
 }
 
-function change_input_field(elem, min_value, max_value, ty) {
+function change_input_field(elem, ty) {
     // console.log('qqqq', elem.value)
     elem.value = elem.value.replace(/[^(\.|\d|\-)]/g, '').slice(0, 15);
     // console.log("wwww", elem.value)
@@ -280,12 +283,10 @@ function change_input_field(elem, min_value, max_value, ty) {
                 }
             }
         }
-        // elem.value = check_num_ogr(min_value, max_value, elem.value);
         let coords = ty === 0 ? grid.trans_coords_to_canvas(elem.value, 0) : grid.trans_coords_to_canvas(0, elem.value);
         grid.point_coords[ty] = coords[ty];
         grid.point_coords[2] = 2;
         grid.draw();
-        document.getElementById("form_error").innerHTML = "";
     }
 }
 
@@ -405,4 +406,6 @@ if (localStorage.getItem("data") == null) {
 
 
 // document.getElementById("suda").innerHTML = localStorage.getItem("data");
+let grid = new Grid(canvas.width, canvas.height, document.getElementById("forma:r_prop").value); // r - размер фигурки
+grid.point_coords = [...grid.trans_coords_to_canvas(document.getElementById("forma:firstNumber").value, document.getElementById("forma:secondNumber").value), 2];
 grid.draw();

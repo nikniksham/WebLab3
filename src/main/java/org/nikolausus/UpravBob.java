@@ -3,6 +3,7 @@ package org.nikolausus;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -17,6 +18,13 @@ public class UpravBob {
 
     public List<ResOfHitEntity> getListResOfHitEntity() {
         return entityManager.createQuery("from ResOfHitEntity").getResultList();
+    }
+
+    public void deleteResOfHit() {
+        for (Iterator<ResOfHitEntity> it = this.getListResOfHitEntity().iterator(); it.hasNext();) {
+            ResOfHitEntity resOfHit = (ResOfHitEntity) it.next();
+            entityManager.remove(resOfHit);
+        }
     }
 
 }

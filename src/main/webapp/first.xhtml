@@ -31,31 +31,9 @@
         <span id="dayOfWeek"></span>
     </div>
     <h:button value="На вторую страницу" outcome="toPage2"></h:button>
-    <p>#{glavniy.data}</p>
     <h:form>
         <h:commandButton action="#{glavniy.updateData}" value="Обновить дату" />
     </h:form>
-
-    <h:dataTable value="#{glavniy.data}" var="tab">
-        <h:column>
-            #{tab.x}
-        </h:column>
-        <h:column>
-            #{tab.y}
-        </h:column>
-        <h:column>
-            #{tab.r}
-        </h:column>
-        <h:column>
-            #{tab.res}
-        </h:column>
-        <h:column>
-            #{tab.ex_at}
-        </h:column>
-        <h:column>
-            #{tab.ex_ti}
-        </h:column>
-    </h:dataTable>
 
 </f:view>
 

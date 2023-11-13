@@ -7,7 +7,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIPanel;
 import javax.faces.context.FacesContext;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -18,11 +20,21 @@ public class GlavniyPoDate {
     UpravBob upravBob;
     String test = "TASGSADG SAF AS";
     List<ResOfHitEntity> data = null;
+    String dataString = "";
+
     UIPanel resultsPanel;
 
     float x;
     float y;
-    float r;
+    float r = 1;
+
+    public String getDataString() {
+        return dataString;
+    }
+
+    public void setDataString(String dataString) {
+        this.dataString = dataString;
+    }
 
     public float getX() {
         return x;
@@ -73,27 +85,37 @@ public class GlavniyPoDate {
     }
 
     public void updateData() {
-        this.updData();
-        test = "!!!!!!!!!";
+        this.data = upravBob.getListResOfHitEntity();
+        Collections.reverse(data);
+        StringBuilder stb = new StringBuilder();
+        for (Iterator<ResOfHitEntity> it = data.iterator(); it.hasNext();) {
+            ResOfHitEntity resOfHit = (ResOfHitEntity) it.next();
+            stb.append(resOfHit.getX() + " " + resOfHit.getY() + " " + resOfHit.getR() + " " + resOfHit.isRes() + " " + resOfHit.getEx_at() + " " + resOfHit.getEx_ti());
+            if (it.hasNext()) {
+                stb.append("|");
+            }
+        }
+        dataString = stb.toString();
+    }
+
+    public void clearData() {
+        upravBob.deleteResOfHit();
+        this.updateData();
     }
 
     public void addNewData() {
+        long scriptStartTime = System.nanoTime();
         ResOfHitEntity resOfHit = new ResOfHitEntity();
         resOfHit.setX(this.x);
         resOfHit.setY(this.y);
         resOfHit.setR(this.r);
-        resOfHit.setRes(true);
+        resOfHit.setRes((x <= 0 && y >= 0 && (x * x + y * y) <= r / 2 * r / 2) || (x >= 0 && y >= 0 && x <= r / 2 && y <= r) || (x >= 0 && y <= 0 && r >= x - y));
         resOfHit.setEx_at(new Timestamp(new java.util.Date().getTime()));
-        resOfHit.setEx_ti(6);
+        resOfHit.setEx_ti((int) (System.nanoTime() - scriptStartTime));
 
         upravBob.saveResOfHit(resOfHit);
 
-        this.updData();
-    }
-
-    private void updData() {
-        this.data = upravBob.getListResOfHitEntity();
-        Collections.reverse(data);
+        this.updateData();
     }
 
 }

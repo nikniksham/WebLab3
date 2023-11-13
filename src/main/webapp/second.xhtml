@@ -27,25 +27,36 @@
                         <table>
                             <tr>
                                 <td><h:outputLabel value="Координата X" for="firstNumber" /></td>
-                                <td><h:inputText id="firstNumber" value="#{glavniy.x}" required="true" /></td>
+                                <td><h:inputText id="firstNumber" value="#{glavniy.x}" required="true" pt:oninput="change_input_field(this, 0)">
+                                    <f:validateDoubleRange minimum="-5" maximum="5" />
+                                </h:inputText></td>
                                 <td><h:message for="firstNumber" /></td>
                             </tr>
                             <tr>
                                 <td><h:outputLabel value="Координата Y" for="secondNumber" /></td>
-                                <td><h:inputText id="secondNumber" value="#{glavniy.y}" required="true" /></td>
+                                <td><h:inputText id="secondNumber" value="#{glavniy.y}" required="true" pt:oninput="change_input_field(this, 1)">
+                                    <f:validateDoubleRange minimum="-5" maximum="5" />
+                                </h:inputText></td>
                                 <td><h:message for="secondNumber" /></td>
                             </tr>
                             <tr>
-                                <td><h:outputLabel value="R" for="thirdNumber" /></td>
-                                <td><h:inputText id="thirdNumber" value="#{glavniy.r}" required="true" /></td>
-                                <td><h:message for="thirdNumber" /></td>
+                                <td>
+                                    <h:outputLabel value="Значение R" for="rVal" />
+                                </td>
+                                <td>
+                                    <h:commandButton id="rVal" value="1" action="#{glavniy.setR(1)}" />
+                                    <h:commandButton value="2" action="#{glavniy.setR(2)}" />
+                                    <h:commandButton value="3" action="#{glavniy.setR(3)}" />
+                                    <h:commandButton value="4" action="#{glavniy.setR(4)}" />
+                                    <h:commandButton value="5" action="#{glavniy.setR(5)}" />
+                                </td>
                             </tr>
                         </table>
-                        <h:commandButton action="#{glavniy.addNewData}" value="Проверить попадание" />
-                        <h:commandButton action="#{glavniy.updateData}" value="Обновить дату" />
+                        <h:commandButton action="#{glavniy.addNewData}" value="Проверить попадание" class="btn"/>
+                        <h:commandButton action="#{glavniy.clearData}" value="Очистить таблицу" class="btn"/>
+                        <h:inputText id="r_prop" value="#{glavniy.r}" style="display:none"/>
+                        <h:inputText id="r_table" value="#{glavniy.dataString}" style="display:none"/>
                     </h:form>
-                    <button class="btn" onclick="request_to_servlet()">Есть пробитие?</button>
-                    <button class="btn" onclick="clear_table()">Очистить табличку</button>
                 </div>
             </div>
             <div class="container">
@@ -53,12 +64,12 @@
                     <table>
                         <thead>
                         <tr>
-                            <th colspan="1" style="width: 10%">X</th>
-                            <th colspan="1" style="width: 10%">Y</th>
-                            <th colspan="1" style="width: 5%">R</th>
-                            <th colspan="1" style="width: 15%">Результат</th>
-                            <th colspan="1" style="width: 30%">Выполнен в</th>
-                            <th colspan="1" style="width: 30%">Время выполнения</th>
+                            <th colspan="1" style="width: 10%" class="crop">X</th>
+                            <th colspan="1" style="width: 10%" class="crop">Y</th>
+                            <th colspan="1" style="width: 5%" class="crop">R</th>
+                            <th colspan="1" style="width: 15%" class="crop">Результат</th>
+                            <th colspan="1" style="width: 30%" class="crop">Выполнен в</th>
+                            <th colspan="1" style="width: 30%" class="crop">Время выполнения</th>
                         </tr>
                         <h:dataTable value="#{glavniy.data}" var="tab">
                             <h:column pt:style="max-width: 10%" class='crop'>
