@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<head>
+    <script type="text/javascript" src="js/clock.js"/>
+    <link rel="stylesheet" type="text/css" href="css/clock.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+</head>
+
+<body onload="clockTimer();">
+
+<div class="header">
+    <h1 class="main_header_h1">Welcome to the Web-club</h1>
+    <div class="hea-2">
+        <p class="header hea-2__header">
+            Изготовитель: Шамков Николай Николаевич<br/>
+            Группа: P3207<br/>
+            Вариант: 1720
+        </p>
+    </div>
+</div>
+
+<f:view>
+    <div class="clockpage">
+        <span id="clock"></span>
+        <span id="dayOfWeek"></span>
+    </div>
+    <h:button value="На вторую страницу" outcome="toPage2"></h:button>
+</f:view>
+</body>
+</html>
