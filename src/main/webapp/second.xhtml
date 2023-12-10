@@ -27,14 +27,14 @@
                         <table>
                             <tr>
                                 <td><h:outputLabel value="Координата X" for="firstNumber" /></td>
-                                <td><h:inputText id="firstNumber" value="#{glavniy.x}" required="true" pt:oninput="change_input_field_2(this, 0)">
+                                <td><h:inputText id="firstNumber" value="#{hranitel.x}" required="true" pt:oninput="change_input_field_2(this, 0)">
                                     <f:validateDoubleRange minimum="-5" maximum="5" />
                                 </h:inputText></td>
                                 <td><h:message for="firstNumber" /></td>
                             </tr>
                             <tr>
                                 <td><h:outputLabel value="Координата Y" for="secondNumber" /></td>
-                                <td><h:inputText id="secondNumber" value="#{glavniy.y}" required="true" pt:oninput="change_input_field_2(this, 1)">
+                                <td><h:inputText id="secondNumber" value="#{hranitel.y}" required="true" pt:oninput="change_input_field_2(this, 1)">
                                     <f:validateDoubleRange minimum="-5" maximum="5" />
                                 </h:inputText></td>
                                 <td><h:message for="secondNumber" /></td>
@@ -44,18 +44,18 @@
                                     <h:outputLabel value="Значение R" for="rVal" />
                                 </td>
                                 <td>
-                                    <h:commandButton id="rVal" value="1" action="#{glavniy.setR(1)}" />
-                                    <h:commandButton value="2" action="#{glavniy.setR(2)}" />
-                                    <h:commandButton value="3" action="#{glavniy.setR(3)}" />
-                                    <h:commandButton value="4" action="#{glavniy.setR(4)}" />
-                                    <h:commandButton value="5" action="#{glavniy.setR(5)}" />
+                                    <h:commandButton id="rVal" value="1" action="#{hranitel.setR(1)}" />
+                                    <h:commandButton value="2" action="#{hranitel.setR(2)}" />
+                                    <h:commandButton value="3" action="#{hranitel.setR(3)}" />
+                                    <h:commandButton value="4" action="#{hranitel.setR(4)}" />
+                                    <h:commandButton value="5" action="#{hranitel.setR(5)}" />
                                 </td>
                             </tr>
                         </table>
                         <h:commandButton id="check_hit" action="#{glavniy.addNewData}" value="Проверить попадание" class="btn"/>
                         <h:commandButton action="#{glavniy.clearData}" value="Очистить таблицу" class="btn"/>
-                        <h:inputText id="r_prop" value="#{glavniy.r}" style="display:none"/>
-                        <h:inputText id="r_table" value="#{glavniy.dataString}" style="display:none"/>
+                        <h:inputText id="r_prop" value="#{hranitel.r}" style="display:none"/>
+                        <h:inputText id="r_table" value="#{hranitel.dataString}" style="display:none"/>
                     </h:form>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                             <th colspan="1" style="width: 30%" class="crop">Выполнен в</th>
                             <th colspan="1" style="width: 30%" class="crop">Время выполнения</th>
                         </tr>
-                        <h:dataTable value="#{glavniy.data}" var="tab">
+                        <h:dataTable value="#{hranitel.data}" var="tab">
                             <h:column pt:style="max-width: 10%" class='crop'>
                                 #{tab.x}
                             </h:column>

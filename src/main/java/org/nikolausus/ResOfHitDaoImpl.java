@@ -8,23 +8,26 @@ import java.util.List;
 
 
 @Stateless
-public class UpravBob {
+public class ResOfHitDaoImpl implements ResOfHitDao {
     @PersistenceContext(unitName = "myUnit")
     EntityManager entityManager;
 
-    public void saveResOfHit(ResOfHitEntity resOfHit){
-        entityManager.persist(resOfHit);
-    }
 
-    public List<ResOfHitEntity> getListResOfHitEntity() {
+    @Override
+    public List<ResOfHitEntity> getAllResOfHit() {
         return entityManager.createQuery("from ResOfHitEntity").getResultList();
     }
 
-    public void deleteResOfHit() {
-        for (Iterator<ResOfHitEntity> it = this.getListResOfHitEntity().iterator(); it.hasNext();) {
+    @Override
+    public void saveResOfHit(ResOfHitEntity resOfHit) {
+        entityManager.persist(resOfHit);
+    }
+
+    @Override
+    public void deleteAllResOfHit() {
+        for (Iterator<ResOfHitEntity> it = this.getAllResOfHit().iterator(); it.hasNext();) {
             ResOfHitEntity resOfHit = (ResOfHitEntity) it.next();
             entityManager.remove(resOfHit);
         }
     }
-
 }

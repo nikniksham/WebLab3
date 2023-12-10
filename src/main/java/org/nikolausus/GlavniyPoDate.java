@@ -1,13 +1,13 @@
 package org.nikolausus;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.component.UIPanel;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ManagedProperty;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -15,78 +15,18 @@ import java.util.List;
 
 @ManagedBean(name = "glavniy", eager = true)
 @ApplicationScoped
+@Getter
+@Setter
 public class GlavniyPoDate {
     @EJB
-    UpravBob upravBob;
-    String test = "TASGSADG SAF AS";
-    List<ResOfHitEntity> data = null;
-    String dataString = "";
-
-    UIPanel resultsPanel;
-
-    float x;
-    float y;
-    float r = 1;
-
-    public String getDataString() {
-        return dataString;
-    }
-
-    public void setDataString(String dataString) {
-        this.dataString = dataString;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public float getR() {
-        return r;
-    }
-
-    public void setR(float r) {
-        this.r = r;
-    }
-
-    public String getTest() {
-        return test;
-    }
-
-    public void setTest(String test) {
-        this.test = test;
-    }
-
-    public List<ResOfHitEntity> getData() {
-        return data;
-    }
-
-    public void setData(List<ResOfHitEntity> data) {
-        this.data = data;
-    }
-
-    public UIPanel getResultsPanel() {
-        return resultsPanel;
-    }
-
-    public void setResultsPanel(UIPanel resultPanel) {
-        this.resultsPanel = resultPanel;
-    }
+    private ResOfHitDaoImpl resOfHitDao;
+    @ManagedProperty(value="#{hranitel}")
+    private Hranitel hranitel;
 
     public void updateData() {
-        this.data = upravBob.getListResOfHitEntity();
+        List<ResOfHitEntity> data = resOfHitDao.getAllResOfHit();
         Collections.reverse(data);
+        hranitel.setData(data);
         StringBuilder stb = new StringBuilder();
         for (Iterator<ResOfHitEntity> it = data.iterator(); it.hasNext();) {
             ResOfHitEntity resOfHit = (ResOfHitEntity) it.next();
@@ -95,25 +35,28 @@ public class GlavniyPoDate {
                 stb.append("|");
             }
         }
-        dataString = stb.toString();
+        hranitel.setDataString(stb.toString());
+        System.out.println(hranitel.getData().size());
+        System.out.println(hranitel.getDataString());
     }
 
     public void clearData() {
-        upravBob.deleteResOfHit();
+        resOfHitDao.deleteAllResOfHit();
         this.updateData();
     }
 
     public void addNewData() {
         long scriptStartTime = System.nanoTime();
         ResOfHitEntity resOfHit = new ResOfHitEntity();
-        resOfHit.setX(this.x);
-        resOfHit.setY(this.y);
-        resOfHit.setR(this.r);
+        float x = hranitel.getX(), y = hranitel.getY(), r = hranitel.getR();
+        resOfHit.setX(x);
+        resOfHit.setY(y);
+        resOfHit.setR(r);
         resOfHit.setRes((x <= 0 && y >= 0 && (x * x + y * y) <= r / 2 * r / 2) || (x >= 0 && y >= 0 && x <= r / 2 && y <= r) || (x >= 0 && y <= 0 && r >= x - y));
         resOfHit.setEx_at(new Timestamp(new java.util.Date().getTime()));
         resOfHit.setEx_ti((int) (System.nanoTime() - scriptStartTime));
 
-        upravBob.saveResOfHit(resOfHit);
+        resOfHitDao.saveResOfHit(resOfHit);
 
         this.updateData();
     }

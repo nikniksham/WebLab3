@@ -1,11 +1,16 @@
 package org.nikolausus;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 
 @Entity
 @Table(name = "resOfHit")
+@Getter
+@Setter
 public class ResOfHitEntity {
 
     @Id
@@ -24,60 +29,4 @@ public class ResOfHitEntity {
     private Timestamp ex_at;
     @Column(name = "ex_ti")
     private int ex_ti;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public float getR() {
-        return r;
-    }
-
-    public void setR(float r) {
-        this.r = r;
-    }
-
-    public boolean isRes() {
-        return res;
-    }
-
-    public void setRes(boolean res) {
-        this.res = res;
-    }
-
-    public Timestamp getEx_at() {
-        return ex_at;
-    }
-
-    public void setEx_at(Timestamp ex_at) {
-        this.ex_at = ex_at;
-    }
-
-    public int getEx_ti() {
-        return ex_ti;
-    }
-
-    public void setEx_ti(int ex_ti) {
-        this.ex_ti = ex_ti;
-    }
 }

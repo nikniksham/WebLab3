@@ -7,7 +7,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/PostgresDS</jta-data-source>
         <class>org.nikolausus.ResOfHitEntity</class>
-        <class>org.nikolausus.UpravBob</class>
+        <class>org.nikolausus.ResOfHitDaoImpl</class>
         <properties>
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />

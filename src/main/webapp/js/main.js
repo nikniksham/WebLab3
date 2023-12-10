@@ -165,6 +165,8 @@ class Grid {
     }
 
     draw_all_points_from_cache() {
+        console.log("?????????????????ASKasfafsnasnfasnfnasfnafsnafsi")
+        // console.log(document.getElementById("forma:r_table").value)
         document.getElementById("forma:r_table").value.split("|").forEach(val => {
             let res = val.split(' ')
             if (res.length > 1 && res[2] == this.r) {
